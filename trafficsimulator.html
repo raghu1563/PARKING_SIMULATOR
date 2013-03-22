@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+	<html ng-app>
+		<head>
+			<script type="text/javascript" src="http://code.angularjs.org/1.0.5/angular.min.js"></script>
+			<script type="text/javascript" src="trafficscript.js"></script>
+			<link rel="stylesheet" type="text/css" href="trafficstyle.css"/>
+			<title>PARKING-SIMULATOR</title>
+		</head>
+		<body>
+		<div ng-controller="Parkingcontroller">
+			<fieldset style="width:500px;">
+				<h4 style="color:blue">TECHNOVERT-PARKING</h1>
+				<table>
+					<tr>
+						<td>TWO-WHEELER SLOTS</td>
+						<td><input type="text" placeholder="Enter slots here" ng-model="twowheeler_capacity"></td>
+						<td><input type="button" ng-disabled="cannotGenerateTwoWheelSlots" ng-click="GenerateSlots(twowheelers_slots,twowheeler_capacity,'A','twoWheeler')" value="ADD"/></td>
+					</tr>
+					<tr>
+						<td>FOUR-WHEELER SLOTS</td>
+						<td><input type="text" placeholder="Enter slots here" ng-model="fourwheeler_capacity"></td>
+						<td><input type="button" ng-disabled="cannotGenerateFourWheelSlots" ng-click="GenerateSlots(fourwheelers_slots,fourwheeler_capacity,'B','fourWheeler')" value="ADD"/></td>
+					</tr>
+					<tr>
+						<td>OTHER SLOTS</td>
+						<td><input type="text" placeholder="Enter slots here" ng-model="other_capacity"></td>
+						<td><input type="button" ng-disabled="cannotGenerateOtherVehicleSlots" ng-click="GenerateSlots(others_slots,other_capacity,'C','otherVehicles')" value="ADD"/></td>
+					</tr>
+				</div>
+				</table>
+			</fieldset>
+			<div ng-show="slotsVisibility">
+				<table>
+					<tr>
+						<td style="background-color:#FAE039">TWO-WHEELER</td>
+						<td ng-repeat="twowheel in twowheelers_slots"><button ng-disabled="!twowheel.status" ng-class='{"twowheelcolor":twowheel.status}' ng-click="UnParkingVehicle(twowheelers_slots,loc_id,'twoWheeler')" data-ng-init="loc_id=twowheel.location"/> <img src="bike.png" width="50" height="50"/>{{twowheel.location}}</button></td>
+					</tr>
+					<tr>
+						<td style="background-color:#02FAB0">FOUR-WHEELER</td>
+						<td ng-repeat="fourwheel in fourwheelers_slots"><button ng-disabled="!fourwheel.status" ng-class='{"fourwheelcolor":fourwheel.status}' ng-click="UnParkingVehicle(fourwheelers_slots,loc_id,'fourWheeler')" data-ng-init="loc_id=fourwheel.location"/><img src="car2.png" width="50" height="50"/>{{fourwheel.location}}</td>
+					</tr>
+					<tr>
+						<td style="background-color:#97C6F7">OTHERS</td>
+						<td ng-repeat="other in others_slots"><button ng-disabled="!other.status" ng-class='{"othercolor":other.status}' ng-click="UnParkingVehicle(others_slots,loc_id,'otherVehicles')" data-ng-init="loc_id=other.location"/><img src="heavy.png" width="50" height="50"/>{{other.location}}</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td>Enter Vehicle Number:</td>
+						<td><input type="text" placeholder="Enter Vehicle Number" ng-model="vehicle_number" /></td>
+					</tr>
+					<tr>
+						<td><input type="button" ng-disabled="disableTwoWheelParking" 	value="TWO-WHEEL PARKING" 	ng-click="ParkingVehicle(twowheelers_slots,'twoWheeler')"/></td>
+						<td><input type="button" ng-disabled="disableFourwheelParking" 	value="FOUR-WHEEL PARKING" ng-click="ParkingVehicle(fourwheelers_slots,'fourWheeler')"/></td>
+						<td><input type="button" ng-disabled="disableOthersParking" 	value="OTHERS PARKING" 	ng-click="ParkingVehicle(others_slots,'otherVehicles')"/></td>
+					</tr>
+				</table>
+			</div>
+			<div ng-show="visibility_parkin_info">
+			<fieldset style="width:500px;">
+			<legend>PARK-IN INFO</legend>
+			<table border="1">
+				<tr>
+					<td>VEHICLE NUMBER:</td><td>{{vehiclenumber}}</td>
+				</tr>
+				<tr>
+					<td>SLOT NO:</td><td>{{slot_num}}</td>
+				</tr>
+				<tr>
+					<td>VEHICLE-STATUS:</td><td>{{vehiclestatus}}</td>
+				</tr>
+				<tr>
+					<td>IN TIME:</td><td> {{in_Time}}</td>
+				</tr>
+			</table>
+		</fieldset>
+		</div>
+		<div ng-show="visibility_parkout_info">
+			<fieldset style="width:500px;">
+			<legend>PARK-OUT INFO</legend>
+			<table border="1">
+				<tr>
+					<td>VEHICLE NUMBER:</td><td>{{vehiclenumber}}</td>
+				</tr>
+				<tr>
+					<td>SLOT NO:</td><td>{{slot_num}}</td>
+				</tr>
+				<tr>
+					<td>VEHICLE-STATUS:</td><td>{{vehiclestatus}}</td>
+				</tr>
+				<tr>
+					<td>IN TIME:</td><td> {{in_Time}}</td>
+				</tr>
+				<tr>
+					<td>OUT-TIME:</td><td> {{out_Time}}</td>	
+				</tr>
+				<tr>
+					<td>TOTAL TIME(In Seconds):</td><td>{{total_second}}</td>
+				</tr>
+			</table>
+		</fieldset>
+		</div>
+		</div>
+	</body>
+</html>
